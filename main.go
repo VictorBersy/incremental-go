@@ -1,12 +1,8 @@
 package main
 
-// A simple example that shows how to send activity to Bubble Tea in real-time
-// through a channel.
-
 import (
 	"fmt"
-	"math/rand"
-	"os"
+	"log"
 	"time"
 
 	tea "github.com/charmbracelet/bubbletea"
@@ -14,51 +10,23 @@ import (
 )
 
 type model struct {
-	sub                chan struct{} // where we'll receive activity notifications
-	containers         uint64
+	containers         float64
+	pods               float64
 	autobuy_containers uint64
-	pods               uint64
 	quitting           bool
 }
 
-// A message used to indicate that activity has occurred. In the real world (for
-// example, chat) this would contain actual data.
-type containerMsg struct{}
+type tickMsg time.Time
 
-// Simulate a process that sends events at an irregular interval in real time.
-// In this case, we'll send events on the channel at a random interval between
-// 100 to 1000 milliseconds. As a command, Bubble Tea will run this
-// asynchronously.
-func listenForActivity(sub chan struct{}) tea.Cmd {
-	return func() tea.Msg {
-		for {
-			time.Sleep(time.Millisecond * time.Duration(rand.Int63n(90)+10))
-			sub <- struct{}{}
-		}
-	}
-}
-
-// A command that waits for the activity on a channel.
-func waitForActivity(sub chan struct{}) tea.Cmd {
-	return func() tea.Msg {
-		return containerMsg(<-sub)
-	}
-}
-
-func autobuy(m *model) {
-	if m.autobuy_containers > 0 {
-		ticker := time.NewTicker(10 * time.Millisecond)
-		for range ticker.C {
-			createContainer(m)
-		}
+func main() {
+	p := tea.NewProgram(model{}, tea.WithAltScreen())
+	if err := p.Start(); err != nil {
+		log.Fatal(err)
 	}
 }
 
 func (m model) Init() tea.Cmd {
-	return tea.Batch(
-		listenForActivity(m.sub), // generate activity
-		waitForActivity(m.sub),   // wait for activity
-	)
+	return tea.Batch(tick(), tea.EnterAltScreen)
 }
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
@@ -82,8 +50,11 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, nil
 		}
 
-	case containerMsg:
-		return m, waitForActivity(m.sub) // wait for next event
+	case tickMsg:
+		if m.autobuy_containers > 0 {
+			autoBuyContainer(&m)
+		}
+		return m, tick()
 
 	default:
 		return m, nil
@@ -95,9 +66,9 @@ func (m model) View() string {
 	if m.containers == 0 && m.pods == 0 {
 		s += fmt.Sprintln(lipgloss.NewStyle().Bold(true).Render("Press 'A' to generate containers"))
 	}
-	s += fmt.Sprintln(lipgloss.NewStyle().Render(fmt.Sprintf("Containers created: %d (autobuyers: %d)", m.containers, m.autobuy_containers)))
+	s += fmt.Sprintln(lipgloss.NewStyle().Render(fmt.Sprintf("Containers created: %0.2f (autobuyers: %d)", m.containers, m.autobuy_containers)))
 	if m.containers > 10 || m.pods > 0 {
-		s += fmt.Sprintln(lipgloss.NewStyle().Render(fmt.Sprintf("Pods created: %d", m.pods)))
+		s += fmt.Sprintln(lipgloss.NewStyle().Render(fmt.Sprintf("Pods created: %0.2f", m.pods)))
 	}
 	if m.quitting {
 		s += "\n"
@@ -105,20 +76,13 @@ func (m model) View() string {
 	return s
 }
 
-func main() {
-	p := tea.NewProgram(model{
-		sub: make(chan struct{}),
-	},
-		tea.WithAltScreen())
-
-	if p.Start() != nil {
-		fmt.Println("could not start program")
-		os.Exit(1)
-	}
-}
-
 func createContainer(m *model) model {
 	m.containers++
+	return *m
+}
+
+func autoBuyContainer(m *model) model {
+	m.containers = m.containers + (float64(1*m.autobuy_containers) / 10)
 	return *m
 }
 
@@ -136,4 +100,10 @@ func buyPods(m model) model {
 		m.pods++
 	}
 	return m
+}
+
+func tick() tea.Cmd {
+	return tea.Tick(100*time.Millisecond, func(t time.Time) tea.Msg {
+		return tickMsg(t)
+	})
 }
