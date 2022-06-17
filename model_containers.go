@@ -1,0 +1,23 @@
+package main
+
+func addContainer(m *model, amount float64) model {
+	m.containersGenerated = m.containersGenerated + amount
+	m.containers = m.containers + amount
+	return *m
+}
+
+func buyContainer(m *model) model {
+	if m.containers >= float64(m.config.costs["generators"]["containers"]) {
+		m.containers = m.containers - float64(m.config.costs["generators"]["containers"])
+		m.containers++
+	}
+	return *m
+}
+
+func buyContainerGenerator(m *model) model {
+	if m.containers >= float64(m.config.costs["generators"]["containers"]) {
+		m.containers = m.containers - float64(m.config.costs["generators"]["containers"])
+		m.generator_containers++
+	}
+	return *m
+}
