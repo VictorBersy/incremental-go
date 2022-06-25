@@ -8,6 +8,8 @@ import (
 )
 
 type model struct {
+	width                int
+	height               int
 	pointsGenerated      float64
 	points               float64
 	containersGenerated  float64
@@ -58,6 +60,10 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		default:
 			return m, nil
 		}
+
+	case tea.WindowSizeMsg:
+		m.width, m.height = msg.Width, msg.Height
+		return m, nil
 
 	case tickMsg:
 		if m.generator_points > 0 {
