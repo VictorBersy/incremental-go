@@ -22,7 +22,7 @@ type model struct {
 	containers          float64
 	containersGenerated float64
 	containersBoost     float64
-	containerGenerator  int
+	containersGenerator int
 
 	pods          float64
 	podsGenerated float64
