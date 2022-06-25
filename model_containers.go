@@ -7,14 +7,14 @@ func addContainer(m *model, amount float64) model {
 }
 
 func buyContainer(m *model) model {
-	addContainer(m, m.config.generators["containers_per_tick"]*float64(m.containerGenerator))
+	addContainer(m, m.config.generators["containers_per_tick"]*float64(m.containersGenerator))
 	return *m
 }
 
 func buyContainerGenerator(m *model) model {
 	if m.containers >= float64(m.config.costs["generators"]["containers"]) {
 		m.containers = m.containers - float64(m.config.costs["generators"]["containers"])
-		m.containerGenerator++
+		m.containersGenerator++
 	}
 	return *m
 }
