@@ -1,13 +1,8 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 func DisplayTopBar(m model) string {
-	s := ""
-	s += block_top_bar_style.Width(m.width).Render(welcome_text)
-	s += block_top_bar_style.Width(m.width).Render(goal_text)
-	s += block_top_bar_style.Width(m.width).Render(instructions_text)
-	return fmt.Sprintln(s)
+	text := fmt.Sprintln(welcome_text) + fmt.Sprintln(goal_text) + fmt.Sprintln(instructions_text)
+	return block_top_bar_style.Width(calculateColumnWidth(m.width, block_top_bar_ratio)).Height(5).Render(text)
 }

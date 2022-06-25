@@ -8,7 +8,7 @@ var goal_text string = "Reach XXX whale points"
 var instructions_text string = "Press 'P' to generate your first points."
 
 // Total block
-var generated_title string = "Generated"
+var generated_title string = "Total generated"
 var current_title string = "Current"
 
 // Modifiers block

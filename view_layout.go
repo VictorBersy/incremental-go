@@ -2,15 +2,20 @@ package main
 
 import "github.com/charmbracelet/lipgloss"
 
-func generateLayout(m model) string {
-	s := ""
-	s += DisplayTopBar(m)
-	s += lipgloss.JoinHorizontal(
-		lipgloss.Top,
-		DisplayTotalBlock(m),
-		DisplayModifiersBlock(m),
-		DisplayBuyersBlock(m),
-	)
+var block_top_bar_ratio = float64(100)
+var block_total_ratio = float64(20)
+var block_modifiers_ratio = float64(40)
+var block_buyables_ratio = float64(40)
 
-	return s
+func generateLayout(m model) string {
+	return lipgloss.JoinVertical(
+		lipgloss.Top,
+		DisplayTopBar(m),
+		lipgloss.JoinHorizontal(
+			lipgloss.Top,
+			DisplayTotalBlock(m),
+			DisplayModifiersBlock(m),
+			DisplayBuyablesBlock(m),
+		),
+	)
 }

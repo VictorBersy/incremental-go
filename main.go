@@ -8,17 +8,25 @@ import (
 )
 
 type model struct {
-	width                int
-	height               int
-	pointsGenerated      float64
-	points               float64
-	containersGenerated  float64
-	containers           float64
-	pods                 float64
-	generator_points     int
-	generator_containers int
-	quitting             bool
-	config               Config
+	width  int
+	height int
+
+	quitting bool
+	config   Config
+
+	points          float64
+	pointsGenerated float64
+	pointsBoost     float64
+	pointsGenerator int
+
+	containers          float64
+	containersGenerated float64
+	containersBoost     float64
+	containerGenerator  int
+
+	pods          float64
+	podsGenerated float64
+	podsBoost     float64
 }
 
 type tickMsg time.Time
@@ -66,7 +74,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return m, nil
 
 	case tickMsg:
-		if m.generator_points > 0 {
+		if m.pointsGenerator > 0 {
 			generatePoint(&m)
 		}
 		return m, tick(&m)
