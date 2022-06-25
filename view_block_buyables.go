@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/charmbracelet/lipgloss"
 )
 
@@ -18,7 +16,7 @@ func DisplayBuyablesBlock(m model) string {
 }
 
 func DisplayUpgradesBlock(m model) string {
-	upgrade_points_booster := fmt.Sprintf("Buy upgrade: Increase points boost")
+	upgrade_points_booster := "Buy upgrade: Increase points boost"
 
 	return lipgloss.JoinVertical(
 		lipgloss.Left,
@@ -29,7 +27,7 @@ func DisplayUpgradesBlock(m model) string {
 
 func DisplayPrestigeBlock(m model) string {
 	column_size := calculateColumnWidth(m.width, block_buyables_ratio)
-	prestige_points_booster := fmt.Sprintf("Prestige to increase points boost")
+	prestige_points_booster := "Prestige to increase points boost"
 
 	return lipgloss.JoinVertical(
 		lipgloss.Left,
