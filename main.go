@@ -26,7 +26,6 @@ type model struct {
 
 	pods          float64
 	podsGenerated float64
-	podsBoost     float64
 }
 
 type tickMsg time.Time

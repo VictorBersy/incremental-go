@@ -43,11 +43,9 @@ var block_total_style = blockStyle(block_total_colors["fg"], block_total_colors[
 // Title
 var block_buyables_title_style = titleStyle(block_buyables_colors["fg"], block_buyables_colors["bg"])
 var block_modifiers_title_style = titleStyle(block_modifiers_colors["fg"], block_modifiers_colors["bg"])
-var block_top_bar_title_style = titleStyle(block_top_bar_colors["fg"], block_top_bar_colors["bg"])
 var block_total_title_style = titleStyle(block_total_colors["fg"], block_total_colors["bg"])
 
 // Content
 var block_buyables_content_style = contentStyle(block_buyables_colors["fg"], block_buyables_colors["bg"])
 var block_modifiers_content_style = contentStyle(block_modifiers_colors["fg"], block_modifiers_colors["bg"])
-var block_top_bar_content_style = contentStyle(block_top_bar_colors["fg"], block_top_bar_colors["bg"])
 var block_total_content_style = contentStyle(block_total_colors["fg"], block_total_colors["bg"])
