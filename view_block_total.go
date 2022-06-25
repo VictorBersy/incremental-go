@@ -7,12 +7,14 @@ import (
 )
 
 func DisplayTotalBlock(m model) string {
-	return block_total_style.Width(calculateColumnWidth(m.width, block_total_ratio)).Render(
-		lipgloss.JoinVertical(
-			lipgloss.Left,
-			DisplayGeneratedBlock(m),
-			DisplayCurrentBlock(m),
-		))
+	return block_total_style.
+		Width(calculateColumnWidth(m.width, block_total_ratio)).
+		Render(
+			lipgloss.JoinVertical(
+				lipgloss.Left,
+				DisplayGeneratedBlock(m),
+				DisplayCurrentBlock(m),
+			))
 }
 
 func DisplayGeneratedBlock(m model) string {
