@@ -7,12 +7,14 @@ import (
 )
 
 func DisplayBuyablesBlock(m model) string {
-	return block_buyables_style.Width(calculateColumnWidth(m.width, block_buyables_ratio)).Render(
-		lipgloss.JoinVertical(
-			lipgloss.Left,
-			DisplayUpgradesBlock(m),
-			DisplayPrestigeBlock(m),
-		))
+	return block_buyables_style.
+		Width(calculateColumnWidth(m.width, block_buyables_ratio)).
+		Render(
+			lipgloss.JoinVertical(
+				lipgloss.Left,
+				DisplayUpgradesBlock(m),
+				DisplayPrestigeBlock(m),
+			))
 }
 
 func DisplayUpgradesBlock(m model) string {

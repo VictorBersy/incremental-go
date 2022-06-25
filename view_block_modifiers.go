@@ -7,12 +7,14 @@ import (
 )
 
 func DisplayModifiersBlock(m model) string {
-	return block_modifiers_style.Width(calculateColumnWidth(m.width, block_modifiers_ratio)).Render(
-		lipgloss.JoinVertical(
-			lipgloss.Left,
-			DisplayGeneratorsBlock(m),
-			DisplayBoostersBlock(m),
-		))
+	return block_modifiers_style.
+		Width(calculateColumnWidth(m.width, block_modifiers_ratio)).
+		Render(
+			lipgloss.JoinVertical(
+				lipgloss.Left,
+				DisplayGeneratorsBlock(m),
+				DisplayBoostersBlock(m),
+			))
 }
 
 func DisplayGeneratorsBlock(m model) string {
