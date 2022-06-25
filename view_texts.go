@@ -15,6 +15,6 @@ var current_title string = "Current"
 var generators_title string = "Generators"
 var boosters_title string = "Boosters"
 
-// Buyers block
+// Buyables block
 var upgrade_title string = "Upgrades"
 var prestige_title string = "Prestige"
