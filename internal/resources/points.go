@@ -13,15 +13,27 @@ func (p Points) Add(amount float64) Points {
 	return p
 }
 
+func (p Points) ManuallyGenerate() Points {
+	return Points.Add(p, addPerTick())
+}
+
 func (p Points) Generate() Points {
-	Points.Add(p, float64(1))
-	return p
+	return Points.Add(p, addPerTick()*float64(p.Generators))
 }
 
 func (p Points) BuyGenerator() Points {
-	if p.Count >= float64(1) {
-		p.Count = p.Count - float64(1)
+	cost := generatorCost()
+	if p.Count >= cost {
+		p.Count = p.Count - cost
 		p.Generators++
 	}
 	return p
+}
+
+func addPerTick() float64 {
+	return float64(1)
+}
+
+func generatorCost() float64 {
+	return float64(10)
 }

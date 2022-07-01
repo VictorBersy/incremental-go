@@ -12,6 +12,5 @@ func (p Pods) add(amount float64) Pods {
 }
 
 func (p Pods) Buy() Pods {
-	Pods.add(p, float64(1))
-	return p
+	return Pods.add(p, float64(1))
 }

@@ -36,7 +36,7 @@ func NewModel() Model {
 }
 
 func (m Model) Init() tea.Cmd {
-	return tea.Batch(tick(&m), tea.EnterAltScreen)
+	return tea.Batch(tick(m.Config.Tick), tea.EnterAltScreen)
 }
 
 func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
@@ -45,7 +45,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case tea.KeyMsg:
 		switch msg.String() {
 		case "p":
-			m.Resources.Points = m.Resources.Points.Add(1.0)
+			m.Resources.Points = m.Resources.Points.ManuallyGenerate()
 			return m, nil
 		case "o":
 			m.Resources.Points = m.Resources.Points.BuyGenerator()
@@ -71,10 +71,8 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return m, nil
 
 	case TickMsg:
-		if m.Resources.Points.Generators > 0 {
-			m.Resources.Points.Generate()
-		}
-		return m, tick(&m)
+		m.Resources.Points = m.Resources.Points.Generate()
+		return m, tick(m.Config.Tick)
 
 	default:
 		return m, nil
@@ -89,8 +87,8 @@ func (m Model) View() string {
 	return s
 }
 
-func tick(m *Model) tea.Cmd {
-	return tea.Tick(m.Config.Tick, func(t time.Time) tea.Msg {
+func tick(duration time.Duration) tea.Cmd {
+	return tea.Tick(duration, func(t time.Time) tea.Msg {
 		return TickMsg(t)
 	})
 }
