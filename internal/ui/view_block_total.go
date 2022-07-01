@@ -1,4 +1,4 @@
-package main
+package ui
 
 import (
 	"fmt"
@@ -6,9 +6,9 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
-func DisplayTotalBlock(m model) string {
+func DisplayTotalBlock(m Model) string {
 	return block_total_style.
-		Width(calculateColumnWidth(m.width, block_total_ratio)).
+		Width(CalculateColumnWidth(m.Width, block_total_ratio)).
 		Render(
 			lipgloss.JoinVertical(
 				lipgloss.Left,
@@ -17,11 +17,11 @@ func DisplayTotalBlock(m model) string {
 			))
 }
 
-func DisplayGeneratedBlock(m model) string {
-	column_size := calculateColumnWidth(m.width, block_total_ratio)
-	points := fmt.Sprintf("Points: %0.1f", m.pointsGenerated)
-	containers := fmt.Sprintf("Containers: %0.1f", m.containersGenerated)
-	pods := fmt.Sprintf("Pods: %0.1f", m.podsGenerated)
+func DisplayGeneratedBlock(m Model) string {
+	column_size := CalculateColumnWidth(m.Width, block_total_ratio)
+	points := fmt.Sprintf("Points: %0.1f", m.Resources.Points.Generated)
+	containers := fmt.Sprintf("Containers: %0.1f", m.Resources.Containers.Generated)
+	pods := fmt.Sprintf("Pods: %0.1f", m.Resources.Pods.Generated)
 
 	return lipgloss.JoinVertical(
 		lipgloss.Left,
@@ -32,11 +32,11 @@ func DisplayGeneratedBlock(m model) string {
 	)
 }
 
-func DisplayCurrentBlock(m model) string {
-	column_size := calculateColumnWidth(m.width, block_total_ratio)
-	points := fmt.Sprintf("Points: %0.1f", m.points)
-	containers := fmt.Sprintf("Containers: %0.1f", m.containers)
-	pods := fmt.Sprintf("Pods: %0.1f", m.pods)
+func DisplayCurrentBlock(m Model) string {
+	column_size := CalculateColumnWidth(m.Width, block_total_ratio)
+	points := fmt.Sprintf("Points: %0.1f", m.Resources.Points.Count)
+	containers := fmt.Sprintf("Containers: %0.1f", m.Resources.Containers.Count)
+	pods := fmt.Sprintf("Pods: %0.1f", m.Resources.Pods.Count)
 
 	return lipgloss.JoinVertical(
 		lipgloss.Left,

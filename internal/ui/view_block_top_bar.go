@@ -1,14 +1,16 @@
-package main
+package ui
 
-import "fmt"
+import (
+	"fmt"
+)
 
-func DisplayTopBar(m model) string {
+func DisplayTopBar(m Model) string {
 	text := fmt.Sprintln(welcome_text) +
 		fmt.Sprintln(goal_text) +
 		fmt.Sprintln(instructions_text)
 
 	return block_top_bar_style.
-		Width(calculateColumnWidth(m.width, block_top_bar_ratio)).
+		Width(CalculateColumnWidth(m.Width, block_top_bar_ratio)).
 		Height(5).
 		Render(text)
 }

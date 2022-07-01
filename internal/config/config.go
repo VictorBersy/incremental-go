@@ -1,19 +1,18 @@
-package main
+package config
 
 import "time"
 
 type Config struct {
-	tick       time.Duration
-	costs      map[string]map[string]int
-	generators map[string]float64
-	boosters   map[string]float64
+	Tick       time.Duration
+	Costs      map[string]map[string]int
+	Generators map[string]float64
+	Boosters   map[string]float64
 }
 
-func LoadConfig() (config Config) {
-
-	c := Config{
-		tick: 10 * time.Millisecond,
-		costs: map[string]map[string]int{
+func Load() (config Config) {
+	return Config{
+		Tick: 10 * time.Millisecond,
+		Costs: map[string]map[string]int{
 			"models": {
 				"container": 10,
 				"pod":       25,
@@ -29,13 +28,11 @@ func LoadConfig() (config Config) {
 				"pod":       100000,
 			},
 		},
-		generators: map[string]float64{
+		Generators: map[string]float64{
 			"points_per_tick": 0.001,
 		},
-		boosters: map[string]float64{
+		Boosters: map[string]float64{
 			"points_per_tick": 0.001,
 		},
 	}
-
-	return c
 }

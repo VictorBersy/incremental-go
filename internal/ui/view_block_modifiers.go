@@ -1,4 +1,4 @@
-package main
+package ui
 
 import (
 	"fmt"
@@ -6,9 +6,9 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
-func DisplayModifiersBlock(m model) string {
+func DisplayModifiersBlock(m Model) string {
 	return block_modifiers_style.
-		Width(calculateColumnWidth(m.width, block_modifiers_ratio)).
+		Width(CalculateColumnWidth(m.Width, block_modifiers_ratio)).
 		Render(
 			lipgloss.JoinVertical(
 				lipgloss.Left,
@@ -17,9 +17,9 @@ func DisplayModifiersBlock(m model) string {
 			))
 }
 
-func DisplayGeneratorsBlock(m model) string {
-	column_size := calculateColumnWidth(m.width, block_modifiers_ratio)
-	generators_points := fmt.Sprintf("Points generator: %d/s", m.pointsGenerator)
+func DisplayGeneratorsBlock(m Model) string {
+	column_size := CalculateColumnWidth(m.Width, block_modifiers_ratio)
+	generators_points := fmt.Sprintf("Points generator: %d/s", m.Resources.Points.Generators)
 
 	return lipgloss.JoinVertical(
 		lipgloss.Left,
@@ -28,10 +28,10 @@ func DisplayGeneratorsBlock(m model) string {
 	)
 }
 
-func DisplayBoostersBlock(m model) string {
-	column_size := calculateColumnWidth(m.width, block_modifiers_ratio)
-	points_generation_boost := fmt.Sprintf("Points generation: x%0.1f", m.pointsBoost)
-	containers_generations_boost := fmt.Sprintf("Containers generation: x%0.1f", m.containersBoost)
+func DisplayBoostersBlock(m Model) string {
+	column_size := CalculateColumnWidth(m.Width, block_modifiers_ratio)
+	points_generation_boost := fmt.Sprintf("Points generation: x%0.1f", m.Resources.Points.Boost)
+	containers_generations_boost := fmt.Sprintf("Containers generation: x%0.1f", m.Resources.Containers.Boost)
 
 	return lipgloss.JoinVertical(
 		lipgloss.Left,

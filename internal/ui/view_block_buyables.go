@@ -1,12 +1,12 @@
-package main
+package ui
 
 import (
 	"github.com/charmbracelet/lipgloss"
 )
 
-func DisplayBuyablesBlock(m model) string {
+func DisplayBuyablesBlock(m Model) string {
 	return block_buyables_style.
-		Width(calculateColumnWidth(m.width, block_buyables_ratio)).
+		Width(CalculateColumnWidth(m.Width, block_buyables_ratio)).
 		Render(
 			lipgloss.JoinVertical(
 				lipgloss.Left,
@@ -15,7 +15,7 @@ func DisplayBuyablesBlock(m model) string {
 			))
 }
 
-func DisplayUpgradesBlock(m model) string {
+func DisplayUpgradesBlock(m Model) string {
 	upgrade_points_booster := "Buy upgrade: Increase points boost"
 
 	return lipgloss.JoinVertical(
@@ -25,8 +25,8 @@ func DisplayUpgradesBlock(m model) string {
 	)
 }
 
-func DisplayPrestigeBlock(m model) string {
-	column_size := calculateColumnWidth(m.width, block_buyables_ratio)
+func DisplayPrestigeBlock(m Model) string {
+	column_size := CalculateColumnWidth(m.Width, block_buyables_ratio)
 	prestige_points_booster := "Prestige to increase points boost"
 
 	return lipgloss.JoinVertical(

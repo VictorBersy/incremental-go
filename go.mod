@@ -1,4 +1,4 @@
-module main
+module github.com/VictorBersy/incremental-go
 
 go 1.18
 
