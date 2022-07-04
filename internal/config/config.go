@@ -8,8 +8,6 @@ type Config struct {
 	Tick time.Duration
 }
 
-func Load() (config Config) {
-	return Config{
-		Tick: 1 * time.Millisecond,
-	}
+func TickDuration() time.Duration {
+	return 50 * time.Millisecond
 }

@@ -15,6 +15,7 @@ type Model struct {
 	tea.Model
 
 	Quitting  bool
+	Tick      time.Duration
 	Resources resources.Resources
 }
 
@@ -26,12 +27,12 @@ func NewModel() Model {
 		Height:   0,
 		Model:    nil,
 		Quitting: false,
-		Config:   config.Load(),
+		Tick:     config.TickDuration(),
 	}
 }
 
 func (m Model) Init() tea.Cmd {
-	return tea.Batch(tick(m.Config.Tick), tea.EnterAltScreen)
+	return tea.Batch(tick(m.Tick), tea.EnterAltScreen)
 }
 
 func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
@@ -67,7 +68,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	case TickMsg:
 		m.Resources.Points = m.Resources.Points.Generate()
-		return m, tick(m.Config.Tick)
+		return m, tick(m.Tick)
 
 	default:
 		return m, nil
