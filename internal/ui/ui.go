@@ -15,12 +15,7 @@ type Model struct {
 	tea.Model
 
 	Quitting  bool
-	Config    config.Config
-	Resources struct {
-		Containers resources.Containers
-		Pods       resources.Pods
-		Points     resources.Points
-	}
+	Resources resources.Resources
 }
 
 type TickMsg time.Time
@@ -51,7 +46,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.Resources.Points = m.Resources.Points.BuyGenerator()
 			return m, nil
 		case "a":
-			m.Resources.Containers = m.Resources.Containers.Buy()
+			m.Resources = m.Resources.Containers.Buy(m.Resources)
 			return m, nil
 		case "b":
 			m.Resources.Pods = m.Resources.Pods.Buy()
