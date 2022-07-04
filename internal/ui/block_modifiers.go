@@ -19,7 +19,8 @@ func DisplayModifiersBlock(m Model) string {
 
 func DisplayGeneratorsBlock(m Model) string {
 	column_size := CalculateColumnWidth(m.Width, block_modifiers_ratio)
-	generators_points := fmt.Sprintf("Points generator: %d/s", m.Resources.Points.Generators)
+	cost_generator := fmt.Sprintf("Cost: %0.1f", m.Resources.Points.GeneratorCost())
+	generators_points := fmt.Sprintf("%s Points generator: %d (%.2f/s)", cost_generator, m.Resources.Points.Generators, m.Resources.Points.AddPerTick())
 
 	return lipgloss.JoinVertical(
 		lipgloss.Left,

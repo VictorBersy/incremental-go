@@ -13,8 +13,12 @@ func (c Containers) add(amount float64) Containers {
 	return c
 }
 
-func (c Containers) Buy() Containers {
-	return Containers.add(c, float64(1))
+func (c Containers) Buy(r Resources) Resources {
+	if r.Points.Count > c.cost() {
+		r.Points.Count = r.Points.Count - c.cost()
+		r.Containers = Containers.add(c, c.cost())
+	}
+	return r
 }
 
 func (c Containers) BuyGenerator() Containers {
@@ -24,6 +28,10 @@ func (c Containers) BuyGenerator() Containers {
 		c.Generators++
 	}
 	return c
+}
+
+func (c Containers) cost() float64 {
+	return float64(10)
 }
 
 func (c Containers) generatorCost() float64 {

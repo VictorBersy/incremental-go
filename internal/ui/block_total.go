@@ -19,9 +19,9 @@ func DisplayTotalBlock(m Model) string {
 
 func DisplayGeneratedBlock(m Model) string {
 	column_size := CalculateColumnWidth(m.Width, block_total_ratio)
-	points := fmt.Sprintf("Points: %0.1f", m.Resources.Points.Generated)
-	containers := fmt.Sprintf("Containers: %0.1f", m.Resources.Containers.Generated)
-	pods := fmt.Sprintf("Pods: %0.1f", m.Resources.Pods.Generated)
+	points := fmt.Sprintf("Points: %0.2f", m.Resources.Points.Generated)
+	containers := fmt.Sprintf("Containers: %0.2f", m.Resources.Containers.Generated)
+	pods := fmt.Sprintf("Pods: %0.2f", m.Resources.Pods.Generated)
 
 	return lipgloss.JoinVertical(
 		lipgloss.Left,
@@ -34,9 +34,9 @@ func DisplayGeneratedBlock(m Model) string {
 
 func DisplayCurrentBlock(m Model) string {
 	column_size := CalculateColumnWidth(m.Width, block_total_ratio)
-	points := fmt.Sprintf("Points: %0.1f", m.Resources.Points.Count)
-	containers := fmt.Sprintf("Containers: %0.1f", m.Resources.Containers.Count)
-	pods := fmt.Sprintf("Pods: %0.1f", m.Resources.Pods.Count)
+	points := fmt.Sprintf("Points: %0.2f", m.Resources.Points.Count)
+	containers := fmt.Sprintf("Containers: %0.2f", m.Resources.Containers.Count)
+	pods := fmt.Sprintf("Pods: %0.2f", m.Resources.Pods.Count)
 
 	return lipgloss.JoinVertical(
 		lipgloss.Left,
